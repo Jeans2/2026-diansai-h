@@ -1,0 +1,19 @@
+# CCS-generated build output
+Debug/
+Release/
+
+# Local IDE/cache files
+.metadata/
+.launches/
+*.launch
+
+# Temporary and local backup files
+*.bak
+*.tmp
+*.log
+*~
+
+# OS-generated files
+.DS_Store
+Thumbs.db
+Desktop.ini
