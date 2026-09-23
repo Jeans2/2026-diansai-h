@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>K230钢球图传入口</title>
+<style>
+body{font-family:system-ui,"Microsoft YaHei",sans-serif;background:#081018;color:#eff7ff;margin:0;
+min-height:100vh;display:grid;place-items:center}.card{width:min(560px,calc(100% - 32px));background:#111c27;
+border:1px solid #263746;border-radius:16px;padding:24px;box-shadow:0 20px 60px #0008}h1{font-size:22px;margin-top:0}
+label{display:block;color:#9bb0c2;margin:18px 0 7px}input{width:100%;box-sizing:border-box;padding:12px;border-radius:9px;
+border:1px solid #385065;background:#081018;color:#fff;font-size:16px}button{margin-top:16px;width:100%;padding:12px;
+border:0;border-radius:9px;background:#29a8ff;color:white;font-weight:700;font-size:16px;cursor:pointer}p{color:#9bb0c2;line-height:1.7}
+</style>
+</head>
+<body><main class="card"><h1>K230钢球无线图传</h1><p>先让电脑连接热点 <b>K230-SteelBall</b>，默认密码 <b>12345678</b>。推荐直接在浏览器打开板端网页。</p>
+<label for="host">K230地址</label><input id="host" value="192.168.4.1:8080"><button id="open">打开监视与录像页面</button>
+<p>如果默认地址无效，请查看CanMV串行终端打印的 <code>[web] ready</code> 地址。</p></main>
+<script>document.getElementById('open').onclick=()=>{const h=document.getElementById('host').value.trim();location.href='http://'+h+'/'}</script></body>
+</html>
+

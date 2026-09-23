@@ -1,41 +1,47 @@
-## Example Summary
+# 2026年电赛H题：钢球平衡与智能车系统
 
-Empty project using DriverLib.
-This example shows a basic empty project using DriverLib with just main file
-and SysConfig initialization.
+本仓库包含两套相互独立的程序：
 
-## Peripherals & Pin Assignments
+- `empty.c` 与 `BSP/`：基于 MSPM0G3507 天猛星开发板的智能循迹小车程序。
+- `K230/`：K230 钢球识别、触摸菜单、串口控制和 Wi-Fi 图传程序。
 
-| Peripheral | Pin | Function |
-| --- | --- | --- |
-| SYSCTL |  |  |
-| DEBUGSS | PA20 | Debug Clock |
-| DEBUGSS | PA19 | Debug Data In Out |
+## 智能车部分
 
-## BoosterPacks, Board Resources & Jumper Settings
+智能车使用八路灰度传感器循迹，并通过双编码器速度闭环控制左右电机。
 
-Visit [LP_MSPM0G3507](https://www.ti.com/tool/LP-MSPM0G3507) for LaunchPad information, including user guide and hardware files.
+主要文件：
 
-| Pin | Peripheral | Function | LaunchPad Pin | LaunchPad Settings |
-| --- | --- | --- | --- | --- |
-| PA20 | DEBUGSS | SWCLK | N/A | <ul><li>PA20 is used by SWD during debugging<br><ul><li>`J101 15:16 ON` Connect to XDS-110 SWCLK while debugging<br><li>`J101 15:16 OFF` Disconnect from XDS-110 SWCLK if using pin in application</ul></ul> |
-| PA19 | DEBUGSS | SWDIO | N/A | <ul><li>PA19 is used by SWD during debugging<br><ul><li>`J101 13:14 ON` Connect to XDS-110 SWDIO while debugging<br><li>`J101 13:14 OFF` Disconnect from XDS-110 SWDIO if using pin in application</ul></ul> |
+- `empty.c`：主程序、按键模式与停车逻辑。
+- `BSP/src/bsp_line_follow.c`：循迹方向控制。
+- `BSP/src/bsp_speed_control.c`：双轮速度 PI 控制。
+- `BSP/src/bsp_encoder.c`：编码器读取。
+- `BSP/src/bsp_tb6612.c`：电机驱动。
 
-### Device Migration Recommendations
-This project was developed for a superset device included in the LP_MSPM0G3507 LaunchPad. Please
-visit the [CCS User's Guide](https://software-dl.ti.com/msp430/esd/MSPM0-SDK/latest/docs/english/tools/ccs_ide_guide/doc_guide/doc_guide-srcs/ccs_ide_guide.html#sysconfig-project-migration)
-for information about migrating to other MSPM0 devices.
+## K230 部分
 
-### Low-Power Recommendations
-TI recommends to terminate unused pins by setting the corresponding functions to
-GPIO and configure the pins to output low or input with internal
-pullup/pulldown resistor.
+当前完整菜单程序位于：
 
-SysConfig allows developers to easily configure unused pins by selecting **Board**→**Configure Unused Pins**.
+```text
+K230/k230_touch_menu/main.py
+```
 
-For more information about jumper configuration to achieve low-power using the
-MSPM0 LaunchPad, please visit the [LP-MSPM0G3507 User's Guide](https://www.ti.com/lit/slau873).
+部署时将该文件复制到 K230 SD 卡根目录，并命名为 `main.py`。
 
-## Example Usage
+目录说明：
 
-Compile, load and run the example.
+- `K230/k230_touch_menu/`：触摸菜单、钢球识别、UART 控制和 RTSP 图传完整版本。
+- `K230/k230_mode4_auto/`：自动进入 Mode 4 的精简版本。
+- `K230/k230_other_gpio11_12/`：UART2 GPIO11/12 接线版本。
+- `K230/k230wifi图传/`：独立 Wi-Fi/RTSP 图传程序及 VLC 播放入口。
+- `K230/k230/`：早期识别程序、模型和网页工具。
+- `K230/K230拍照采集.py`：电脑端拍照采集工具。
+- `K230/系统说明.md`：系统结构、接线、工作模式和部署说明。
+
+K230 菜单程序使用 UART3 与钢球控制天猛星通信：GPIO50 为 TX，GPIO51 为 RX，波特率为 115200。
+
+## 注意事项
+
+- K230、天猛星和电机驱动控制侧必须共地。
+- 电机电源不要由开发板 GPIO 供电。
+- VLC 安装包、构建缓存、SDK 副本和临时调试文件未纳入仓库。
+- 使用前请根据现场机械方向、限位开关和摄像头安装位置进行调试。
